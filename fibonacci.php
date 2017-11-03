@@ -10,8 +10,6 @@ Author URI: http://lloc.de/
 
 namespace realloc\WPMI_Rest;
 
-use Composer\DependencyResolver\Transaction;
-
 interface Factory {
 
 	/**
@@ -57,20 +55,21 @@ class AjaxFibonacci extends Fibonacci implements Factory {
 		$token  = wp_create_nonce( __CLASS__ );
 		$option = $this->set_name( $token );
 
-		add_option( $option, [ 1, 1 ] );
+		add_option( $option, [] );
 		wp_send_json_success( $token );
 	}
 
 	public function read() {
 		$option = $this->get_name();
-		$data   = get_option( $option );
+		$data   = get_option( $option, [] );
 
-		if ( $data ) {
-			$data = array_slice( $data, -2 );
-			wp_send_json_success( array_sum( $data ) );
+		if ( count( $data ) < 2 ) {
+			wp_send_json_success( 1 );
 		}
 
-		wp_send_json_error( 'KO' );
+		$data = array_slice( $data, -2 );
+
+		wp_send_json_success( array_sum( $data ) );
 	}
 
 	public function update() {
@@ -98,7 +97,7 @@ class AjaxFibonacci extends Fibonacci implements Factory {
 	 * @return string
 	 */
 	protected function set_name( string $name ): string {
-		return "AjaxArray_{$name}";
+		return "AjaxFibonacci_{$name}";
 	}
 
 	protected function get_name() {

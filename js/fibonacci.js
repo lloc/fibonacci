@@ -1,38 +1,33 @@
 jQuery(document).ready(function($) {
-  var token, data = {action: 'fibonacci_create'};
+  var data = {action: 'fibonacci_create', token: null};
 
   $.get(LF.ajaxurl, data).done(function(response) {
-    console.log("Response (create): " + response);
-    token = response.data;
+    data.token = response.data;
   });
 
   $(document).keyup(function(e) {
-    switch(e.keyCode) {
+    switch (e.keyCode) {
       case 13:
-        data = {action: 'fibonacci_read', token: token};
+        data.action = 'fibonacci_read';
 
         $.get(LF.ajaxurl, data).done(function(response) {
-          console.log("Response (read): " + response.data);
+          console.log(response.data);
 
-          data = {
-            action: 'fibonacci_update',
-            token: token,
-            num: response.data
-          };
+          data.action = 'fibonacci_update';
+          data.num = response.data;
 
           $.post(LF.ajaxurl, data).done(function(response) {
-            console.log("Response (update): " + response.data);
+            delete data.num;
           });
         });
         break;
       case 27:
-        data = {action: 'fibonacci_delete', token: token};
+        data.action = 'fibonacci_delete';
 
         $.post(LF.ajaxurl, data).done(function(response) {
-          console.log("Response (delete): " + response.data);
+          console.log('Math is fun!');
         });
         break;
     }
   });
-
 });
