@@ -30,18 +30,23 @@ class LLOC_Test_Fibonacci extends LLOC_Framework_TestCase {
 		$this->assertEquals( 89, $itr->current() );
 	}
 
-	public function test_set_get() {
+	public function test_get() {
 		$itr = new Fibonacci();
 
 		$arr = [ 'previous' => 0, 'current' => 1, 'key' => 0 ];
 		$this->assertEquals( $arr, $itr->get() );
 
-		$itr = $itr->set( 1, 2, 1 );
+		$this->assertEquals( 0, $itr->key() );
+	}
+
+	public function test_set_get() {
+		$itr = ( new Fibonacci() )->set( 1, 2, 1 );
 
 		$this->assertInstanceOf( 'lloc\Fibonacci\Fibonacci', $itr );
 
 		$arr = [ 'previous' => 1, 'current' => 2, 'key' => 1 ];
 		$this->assertEquals( $arr, $itr->get() );
+		$this->assertEquals( 1, $itr->key() );
 	}
 
 }
