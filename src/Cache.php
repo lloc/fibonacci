@@ -2,16 +2,37 @@
 
 namespace lloc\Fibonacci;
 
+/**
+ * Class Cache
+ * @package lloc\Fibonacci
+ */
 abstract class Cache {
 
+	/**
+	 * @var mixed $thing
+	 */
 	protected $thing;
 
-	abstract public function set_cache( $thing );
+	/**
+	 * @param mixed $thing
+	 *
+	 * @return mixed
+	 */
+	abstract public function set_cache( $thing ): self;
 
+	/**
+	 * @return mixed
+	 */
 	abstract public function get_cache();
 
-	abstract public function save_cache();
+	/**
+	 * @return bool
+	 */
+	abstract public function save_cache(): bool;
 
-	abstract public function delete_cache();
+	/**
+	 * @return bool
+	 */
+	abstract public function delete_cache(): bool;
 
 }
