@@ -1,8 +1,8 @@
 jQuery(document).ready(function($) {
-  var data = {action: 'fibonacci_create', token: null};
+  var data = {action: 'fibonacci_create'};
 
-  $.get(LF.ajaxurl, data).done(function(response) {
-    data.token = response.data;
+  $.get(LLOC.ajaxurl, data).done(function(response) {
+    console.debug(response.data);
   });
 
   $(document).keyup(function(e) {
@@ -10,22 +10,21 @@ jQuery(document).ready(function($) {
       case 13:
         data.action = 'fibonacci_read';
 
-        $.get(LF.ajaxurl, data).done(function(response) {
+        $.get(LLOC.ajaxurl, data).done(function(response) {
           console.log(response.data);
 
           data.action = 'fibonacci_update';
-          data.num = response.data;
 
-          $.post(LF.ajaxurl, data).done(function(response) {
-            delete data.num;
+          $.post(LLOC.ajaxurl, data).done(function(response) {
+            console.debug(response.data);
           });
         });
         break;
       case 27:
         data.action = 'fibonacci_delete';
 
-        $.post(LF.ajaxurl, data).done(function(response) {
-          console.log('Math is fun!');
+        $.post(LLOC.ajaxurl, data).done(function(response) {
+          console.debug(response.data);
         });
         break;
     }

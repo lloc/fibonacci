@@ -1,0 +1,24 @@
+<phpunit
+        bootstrap="tests/bootstrap.php"
+        backupGlobals="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        beStrictAboutTestSize="true"
+        timeoutForSmallTests="5"
+>
+    <testsuite name="Internal tests">
+        <directory prefix="test-" suffix=".php">./tests/</directory>
+    </testsuite>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">.</directory>
+        </whitelist>
+    </filter>
+    <groups>
+        <exclude>
+            <group>external-http</group>
+        </exclude>
+    </groups>
+</phpunit>
