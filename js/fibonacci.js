@@ -1,29 +1,30 @@
 jQuery(document).ready(function($) {
-  var data = {action: 'fibonacci_create'};
+  'use strict';
 
-  $.get(LLOC.ajaxurl, data).done(function(response) {
+  var settings = { url: LLOC.ajaxurl, data: {action: 'fibonacci_create'}};
+  $.ajax(settings).done(function(response) {
     console.debug(response.data);
   });
 
   $(document).keyup(function(e) {
     switch (e.keyCode) {
       case 13:
-        data.action = 'fibonacci_read';
+        settings.data.action = 'fibonacci_read';
 
-        $.get(LLOC.ajaxurl, data).done(function(response) {
+        $.ajax(settings).done(function(response) {
           console.log(response.data);
 
-          data.action = 'fibonacci_update';
+          settings.data.action = 'fibonacci_update';
 
-          $.post(LLOC.ajaxurl, data).done(function(response) {
+          $.ajax(settings).done(function(response) {
             console.debug(response.data);
           });
         });
         break;
       case 27:
-        data.action = 'fibonacci_delete';
+        settings.data.action = 'fibonacci_delete';
 
-        $.post(LLOC.ajaxurl, data).done(function(response) {
+        $.ajax(settings).done(function(response) {
           console.debug(response.data);
         });
         break;
