@@ -1,25 +1,27 @@
 jQuery(document).ready(function($) {
   'use strict';
 
-  var sequence = LLOC.apiurl + 'sequence';
-
-  $.post(sequence).done(function(response) {
+  var settings = { url: LLOC.apiurl + 'sequence', type: 'POST' };
+  $.ajax(settings).done(function(response) {
     console.debug(response);
   });
 
   $(document).keyup(function(e) {
     switch (e.keyCode) {
       case 13:
-        $.get(sequence).done(function(response) {
+        settings.type = 'GET';
+        $.ajax(settings).done(function(response) {
           console.log(response);
 
-          $.ajax({url: sequence, type: 'PUT'}).done(function(response) {
+          settings.type = 'PUT';
+          $.ajax(settings).done(function(response) {
             console.debug(response);
           });
         });
         break;
       case 27:
-        $.ajax({url: sequence, type: 'DELETE'}).done(function(response) {
+        settings.type = 'DELETE';
+        $.ajax(settings).done(function(response) {
           console.debug(response);
         });
         break;
