@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
   'use strict';
 
-  var settings = { url: LLOC.apiurl + 'sequence', type: 'POST' };
+  var settings = {url: LLOC.apiurl + 'sequence', type: 'POST'};
   $.ajax(settings).done(function(response) {
     console.debug(response);
   });
