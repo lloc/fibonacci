@@ -1,9 +1,5 @@
 <?php
 
-/**
- * RestFibonacci
- */
-
 namespace lloc\Fibonacci;
 
 /**
@@ -26,7 +22,7 @@ class RestFibonacci extends AutoCache implements Factory, Crud {
 	}
 
 	/**
-	 * @codeCoveragIgnore
+	 * @codeCoverageIgnore
 	 */
 	public function rest_api_init() {
 		register_rest_route( self::namespace,
@@ -51,49 +47,61 @@ class RestFibonacci extends AutoCache implements Factory, Crud {
 		);
 	}
 
+	/**
+	 * @return \WP_REST_Response|\WP_Error|\WP_HTTP_Response
+	 */
 	public function create() {
 		$seq = $this->get_cache();
 
 		if ( $seq ) {
-			return new \WP_REST_Response( 'Existing sequence loaded' );
+			return rest_ensure_response( 'Existing sequence loaded' );
 		}
 
 		$seq = new Fibonacci();
 		$this->set_cache( $seq->get() );
 
-		return new \WP_REST_Response( 'Sequence created' );
+		return rest_ensure_response( 'Sequence created' );
 	}
 
+	/**
+	 * @return \WP_REST_Response|\WP_Error|\WP_HTTP_Response
+	 */
 	public function read() {
 		$arr = $this->get_cache();
 
-		if ( $arr ) {
-			$seq = new Fibonacci( $arr['previous'], $arr['current'], $arr['key'] );
-
-			return new \WP_REST_Response( $seq->current() );
+		if ( ! $arr ) {
+			return new \WP_REST_Response( 'KO', 418 );
 		}
 
-		return new \WP_REST_Response( 'KO', 418 );
+		$seq = new Fibonacci( $arr['previous'], $arr['current'], $arr['key'] );
+
+		return rest_ensure_response( $seq->current() );
 	}
 
+	/**
+	 * @return \WP_REST_Response|\WP_Error|\WP_HTTP_Response
+	 */
 	public function update() {
 		$arr = $this->get_cache();
 
-		if ( $arr ) {
-			$seq = new Fibonacci( $arr['previous'], $arr['current'], $arr['key'] );
-			$seq->next();
-			$this->set_cache( $seq->get() );
-
-			return new \WP_REST_Response( 'Sequence updated' );
+		if ( ! $arr ) {
+			return new \WP_REST_Response( 'KO', 418 );
 		}
 
-		return new \WP_REST_Response( 'KO', 418 );
+		$seq = new Fibonacci( $arr['previous'], $arr['current'], $arr['key'] );
+		$seq->next();
+		$this->set_cache( $seq->get() );
+
+		return rest_ensure_response( 'Sequence updated' );
 	}
 
+	/**
+	 * @return \WP_REST_Response|\WP_Error|\WP_HTTP_Response
+	 */
 	public function delete() {
 		$this->delete_cache();
 
-		return new \WP_REST_Response( 'Sequence deleted' );
+		return rest_ensure_response( 'Sequence deleted' );
 	}
 
 }
