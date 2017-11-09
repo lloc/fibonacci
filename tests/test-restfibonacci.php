@@ -27,7 +27,7 @@ class LLOC_Test_AjaxFibonacci extends LLOC_Framework_TestCase {
 	}
 
 	public function test_delete() {
-		$this->assertEquals( 'WP_REST_Response', $this->get_test()->delete() );
+		$this->assertEquals( 'Sequence deleted', $this->get_test()->delete() );
 	}
 
 }
