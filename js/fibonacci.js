@@ -1,30 +1,26 @@
 jQuery(document).ready(function($) {
-  var data = {action: 'fibonacci_create'};
+  'use strict';
 
-  $.get(LLOC.ajaxurl, data).done(function(response) {
-    console.debug(response.data);
+  var sequence = LLOC.apiurl + 'sequence';
+
+  $.post(sequence).done(function(response) {
+    console.debug(response);
   });
 
   $(document).keyup(function(e) {
     switch (e.keyCode) {
       case 13:
-        data.action = 'fibonacci_read';
+        $.get(sequence).done(function(response) {
+          console.log(response);
 
-        $.get(LLOC.ajaxurl, data).done(function(response) {
-          console.log(response.data);
-
-          data.action = 'fibonacci_update';
-
-          $.post(LLOC.ajaxurl, data).done(function(response) {
-            console.debug(response.data);
+          $.ajax({url: sequence, type: 'PUT'}).done(function(response) {
+            console.debug(response);
           });
         });
         break;
       case 27:
-        data.action = 'fibonacci_delete';
-
-        $.post(LLOC.ajaxurl, data).done(function(response) {
-          console.debug(response.data);
+        $.ajax({url: sequence, type: 'DELETE'}).done(function(response) {
+          console.debug(response);
         });
         break;
     }

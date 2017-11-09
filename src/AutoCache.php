@@ -33,7 +33,7 @@ class AutoCache extends Cache {
 	/**
 	 * @param mixed $thing
 	 *
-	 * @return AutoCache
+	 * @return Cache
 	 */
 	public function set_cache( $thing ): Cache {
 		$this->thing = $thing;

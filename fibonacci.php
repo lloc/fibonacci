@@ -11,7 +11,7 @@ Author URI: http://lloc.de/
 require_once __DIR__ . '/vendor/autoload.php';
 
 add_action( 'init', function () {
-	lloc\Fibonacci\AjaxFibonacci::init();
+	lloc\Fibonacci\RestFibonacci::init();
 } );
 
 add_action( 'wp_enqueue_scripts', function () {
@@ -19,7 +19,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	$src    = plugins_url( 'js/fibonacci.js', __FILE__ );
 
 	wp_enqueue_script( $handle, $src, [ 'jquery' ] );
+
+	$namespace = lloc\Fibonacci\RestFibonacci::namespace;
 	wp_localize_script( $handle, 'LLOC', [
-		'ajaxurl' => admin_url( 'admin-ajax.php' )
+		'apiurl'   => site_url( "/wp-json/{$namespace}/" )
 	] );
 } );
