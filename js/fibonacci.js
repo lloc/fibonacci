@@ -10,12 +10,10 @@ jQuery(document).ready(function($) {
     switch (e.keyCode) {
       case 13:
         settings.data.action = 'fibonacci_read';
-
         $.ajax(settings).done(function(response) {
           console.log(response.data);
 
           settings.data.action = 'fibonacci_update';
-
           $.ajax(settings).done(function(response) {
             console.debug(response.data);
           });
@@ -23,7 +21,6 @@ jQuery(document).ready(function($) {
         break;
       case 27:
         settings.data.action = 'fibonacci_delete';
-
         $.ajax(settings).done(function(response) {
           console.debug(response.data);
         });
