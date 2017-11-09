@@ -25,6 +25,9 @@ class RestFibonacci extends AutoCache implements Factory, Crud {
 		return $obj;
 	}
 
+	/**
+	 * @codeCoveragIgnore
+	 */
 	public function rest_api_init() {
 		register_rest_route( self::namespace,
 			'/sequence', [

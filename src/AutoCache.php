@@ -45,7 +45,7 @@ class AutoCache extends Cache {
 	 * @return mixed
 	 */
 	public function get_cache() {
-		return get_option( $this->name );
+		return $this->thing ?? get_option( $this->name );
 	}
 
 	/**
